@@ -19,6 +19,11 @@ def js(code):
 
 print("🚀 Login EasyHits4U...")
 
+# === CHIUDI TUTTE LE SESSIONI PRECEDENTI ===
+print("🧹 Chiusura sessioni attive...")
+run("browser-use close --all")
+time.sleep(2)
+
 run(f"browser-use config set api_key {API_KEY}")
 run("browser-use cloud connect")
 run("browser-use open https://www.easyhits4u.com/logon/")
@@ -34,11 +39,10 @@ run('browser-use keys "Tab"')
 run(f'browser-use type "{PASSWORD}"')
 time.sleep(1)
 
-# ASPETTA CHE TURNSTILE SIA RISOLTO (campo cf-turnstile-response con valore)
+# ASPETTA CHE TURNSTILE SIA RISOLTO
 print("⏳ Attesa risoluzione Turnstile...")
 run('browser-use wait selector "input[name=\'cf-turnstile-response\']"')
-run('browser-use wait 2')
-run('browser-use eval "document.querySelector(\'input[name=\\\'cf-turnstile-response\\\']\')?.value"')
+time.sleep(3)
 
 # CLICK SUL PULSANTE
 print("🔑 Click su Enter...")
@@ -50,6 +54,7 @@ for i in range(30):
     time.sleep(1)
     url_result = run("browser-use eval 'window.location.href'", capture=True)
     url = url_result.stdout.strip()
+    print(f"   {i+1}s → {url}")
     if "account" in url or "surf" in url:
         print("✅ Dashboard raggiunta!")
         break
