@@ -34,15 +34,31 @@ run('browser-use keys "Tab"')
 run(f'browser-use type "{PASSWORD}"')
 time.sleep(1)
 
-# Click sul pulsante (selettore preciso)
-js("document.querySelector('.modal-overlay-guest .btn_green').click()")
-time.sleep(10)
+# ASPETTA CHE TURNSTILE SIA RISOLTO (campo cf-turnstile-response con valore)
+print("⏳ Attesa risoluzione Turnstile...")
+run('browser-use wait selector "input[name=\'cf-turnstile-response\']"')
+run('browser-use wait 2')
+run('browser-use eval "document.querySelector(\'input[name=\\\'cf-turnstile-response\\\']\')?.value"')
+
+# CLICK SUL PULSANTE
+print("🔑 Click su Enter...")
+js("document.querySelector('button.btn_green').click()")
+
+# ASPETTA LA DASHBOARD
+print("⏳ Attesa redirect...")
+for i in range(30):
+    time.sleep(1)
+    url_result = run("browser-use eval 'window.location.href'", capture=True)
+    url = url_result.stdout.strip()
+    if "account" in url or "surf" in url:
+        print("✅ Dashboard raggiunta!")
+        break
 
 # Cookie
 result = run("browser-use cookies get", capture=True)
 output = result.stdout
 
-# Parsing robusto
+# Parsing
 sesids = None
 user_id = None
 try:
@@ -71,9 +87,3 @@ except Exception as e:
 
 print(f"sesids={sesids}")
 print(f"user_id={user_id}")
-
-# Salva su file
-if sesids and user_id:
-    with open("cookies.txt", "w") as f:
-        f.write(f"sesids={sesids}\nuser_id={user_id}")
-    print("✅ Cookie salvati in cookies.txt")
