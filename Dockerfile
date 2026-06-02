@@ -3,10 +3,10 @@ FROM python:3.12-slim
 # Installa uv (include uvx)
 RUN pip install uv
 
-# Installa browser-use con uv (usa --system per evitare ambiente virtuale)
+# Installa browser-use
 RUN uv pip install --system browser-use
 
-# Installa il browser
+# Installa il browser (Chromium)
 RUN uvx browser-use install
 
 WORKDIR /app
