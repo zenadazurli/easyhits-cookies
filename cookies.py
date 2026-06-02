@@ -4,7 +4,7 @@ import re
 import os
 import ast
 
-API_KEY = os.environ.get("BROWSER_USE_API_KEY", "bu_P3OpQUSfyOTiW5RhGcpqdIkvaPkDWcVCJkY4XlsAD5s")
+API_KEY = os.environ.get("BROWSER_USE_API_KEY", "bu_NOM424xWqXmPtNAy32wMjH1VfrF-STIQ5LhLJYawW4E")
 EMAIL = "sandrominori50+ulugarecexisa@gmail.com"
 PASSWORD = "DDnmVV45!!"
 
@@ -27,13 +27,13 @@ run("browser-use cloud connect")
 run("browser-use open https://www.easyhits4u.com/logon/")
 time.sleep(5)
 
-# Inserisci email (JavaScript)
+# Inserisci email
 js("document.querySelector('input[name=\"username\"]').click()")
 js("document.querySelector('input[name=\"username\"]').value = 'sandrominori50+ulugarecexisa@gmail.com'")
 js("document.querySelector('input[name=\"username\"]').dispatchEvent(new Event('input', { bubbles: true }))")
 time.sleep(1)
 
-# Inserisci password (JavaScript)
+# Inserisci password
 js("document.querySelector('input[name=\"password\"]').click()")
 js("document.querySelector('input[name=\"password\"]').value = 'DDnmVV45!!'")
 js("document.querySelector('input[name=\"password\"]').dispatchEvent(new Event('input', { bubbles: true }))")
@@ -44,8 +44,8 @@ print("⏳ Attesa risoluzione Turnstile...")
 run('browser-use wait selector "input[name=\'cf-turnstile-response\']"')
 time.sleep(2)
 
-# CLICK CON COORDINATE (più preciso!)
-print(f"🔑 Click con coordinate (384, 462)...")
+# Click con coordinate
+print("🔑 Click con coordinate (384, 462)...")
 run("browser-use click 384 462")
 
 # Aspetta dashboard
@@ -92,3 +92,8 @@ except Exception as e:
 
 print(f"sesids={sesids}")
 print(f"user_id={user_id}")
+
+if sesids and user_id:
+    with open("cookies.txt", "w") as f:
+        f.write(f"sesids={sesids}\nuser_id={user_id}")
+    print("✅ Cookie salvati")
