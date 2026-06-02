@@ -19,8 +19,6 @@ def js(code):
 
 print("🚀 Login EasyHits4U...")
 
-# === CHIUDI TUTTE LE SESSIONI PRECEDENTI ===
-print("🧹 Chiusura sessioni attive...")
 run("browser-use close --all")
 time.sleep(2)
 
@@ -29,26 +27,28 @@ run("browser-use cloud connect")
 run("browser-use open https://www.easyhits4u.com/logon/")
 time.sleep(5)
 
-# Inserisci email
-run('browser-use keys "Tab"')
-run(f'browser-use type "{EMAIL}"')
+# Inserisci email (JavaScript)
+js("document.querySelector('input[name=\"username\"]').click()")
+js("document.querySelector('input[name=\"username\"]').value = 'sandrominori50+ulugarecexisa@gmail.com'")
+js("document.querySelector('input[name=\"username\"]').dispatchEvent(new Event('input', { bubbles: true }))")
 time.sleep(1)
 
-# Inserisci password
-run('browser-use keys "Tab"')
-run(f'browser-use type "{PASSWORD}"')
+# Inserisci password (JavaScript)
+js("document.querySelector('input[name=\"password\"]').click()")
+js("document.querySelector('input[name=\"password\"]').value = 'DDnmVV45!!'")
+js("document.querySelector('input[name=\"password\"]').dispatchEvent(new Event('input', { bubbles: true }))")
 time.sleep(1)
 
-# ASPETTA CHE TURNSTILE SIA RISOLTO
+# Aspetta Turnstile
 print("⏳ Attesa risoluzione Turnstile...")
 run('browser-use wait selector "input[name=\'cf-turnstile-response\']"')
-time.sleep(3)
+time.sleep(2)
 
-# CLICK SUL PULSANTE
-print("🔑 Click su Enter...")
-js("document.querySelector('button.btn_green').click()")
+# CLICK CON COORDINATE (più preciso!)
+print(f"🔑 Click con coordinate (384, 462)...")
+run("browser-use click 384 462")
 
-# ASPETTA LA DASHBOARD
+# Aspetta dashboard
 print("⏳ Attesa redirect...")
 for i in range(30):
     time.sleep(1)
